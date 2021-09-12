@@ -1,0 +1,3 @@
+Models represent our data in code.
+In model we will work with data like fetching data, saving , updating or deleting data.
+ 

@@ -1,0 +1,1 @@
+Controller is connection between models and (route / view).

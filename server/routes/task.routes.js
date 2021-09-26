@@ -9,13 +9,14 @@ const router = express.Router();
 
 router.post('/create', auth, taskController.postCreateTask);
 
-router.get('/retrieve', auth, taskController.getRetrieveAllTask);
+router.get('/retrieveList', auth, taskController.getRetrieveTaskList);
+
+router.get('/retrieve/:id', auth, taskController.getRetrieveTaskById);
 
 router.put('/update', auth, taskController.putUpdateTask);
 
 router.delete('/:id', auth, taskController.deleteDeleteTask);
 
-router.get('/:id', auth, taskController.getRetrieveTaskById);
 
 
 module.exports = router;

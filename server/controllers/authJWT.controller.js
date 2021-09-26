@@ -1,15 +1,25 @@
 const authUser = require('../models/authJWT.model');
 
 
-
-exports.postRegisterUser = async (req, res, next) => {
-    const { email, fullName, dob, password } = req.body
+exports.postOwnerLogin = async (req, res, next) => {
+    const { email, password } = req.body
     try {
-        const authUserObject = new authUser(null, email, fullName, dob, password)
-        const registeredUser = await authUserObject.registerUser()
+        let user = await authUser.ownerLogin(email, password)
+        await res.status(200).send({ token: user, role: "owner" });
+    } catch (error) {
+        res.status(500).send({ error: "Something went Wrong" })
+    }
+}
+
+exports.postManagerRegister = async (req, res, next) => {
+    const { email, forename, dob, password } = req.body
+    let reqObj = { email, forename, dob, password }
+    try {
+        const authUserObject = new authUser(reqObj)
+        const registeredUser = await authUserObject.managerRegister()
         let response = {
             user: registeredUser,
-            message: "User Registered Successfully..."
+            message: "Manager Registered Successfully..."
         }
         await res.status(200).send(response);
     } catch (error) {
@@ -20,7 +30,7 @@ exports.postRegisterUser = async (req, res, next) => {
 exports.postUserLogin = async (req, res, next) => {
     const { email, password } = req.body
     try {
-        let user = await authUser.UserLogin(email, password)
+        let user = await authUser.userLogin(email, password)
         await res.status(200).send({ token: user });
     } catch (error) {
         res.status(500).send({ error: "Something went Wrong" })
@@ -28,9 +38,9 @@ exports.postUserLogin = async (req, res, next) => {
 }
 
 // exports.putResetPassword = async (req, res, next) => {
-//     const { userUniqueId, email, fullName, dob, password } = req.body
+//     const { userId, email, forename, dob, password } = req.body
 //     try {
-//         const authObject = new authUser(userUniqueId, email, fullName, dob, password)
+//         const authObject = new authUser(userId, email, forename, dob, password)
 //         const updatedTaskData = await authObject.resetPassword()
 //         await res.status(200).send(updatedTaskData);
 //     } catch (error) {

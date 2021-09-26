@@ -8,7 +8,8 @@ const auth = async (req, res, next) => {
         try {
             let userInfo = {
                 user: decoded.data.user,
-                role: decoded.data.role
+                userId: decoded.data.userId,
+                userRole: decoded.data.userRole,
             }
             req.userInfo = userInfo
         } catch (error) {

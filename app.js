@@ -6,10 +6,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // import from other files----------------------------------------------
-const swagger = require('./server/utils/swagger/swagger.route');
-const taskRoutes = require('./server/routes/task.route');
-const authRoutes = require('./server/routes/authJWT.route');
-
+const swagger = require('./server/utils/swagger/swagger.routes');
+const taskRoutes = require('./server/routes/task.routes');
+const authRoutes = require('./server/routes/authJWT.routes');
+const employeeRoutes = require("./server/routes/employee.routes")
+const feedbackRoutes = require('./server/routes/feedback.routes');
 
 // define constants -----------------------------------------------------
 const app = express();
@@ -35,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'server', 'public')));
 // Route-----------------------------------------------------------------------
 app.use('/todo', taskRoutes);
 app.use('/authJWT', authRoutes);
+app.use("/employee", employeeRoutes)
+app.use('/feedback', feedbackRoutes);
 
 
 

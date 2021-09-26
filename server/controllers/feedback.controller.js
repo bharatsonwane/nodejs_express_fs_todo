@@ -8,7 +8,7 @@ exports.postCreateFeedback = async (req, res, next) => {
         const createdFeedbackData = await feedbackObject.createFeedback()
         await res.status(200).send(createdFeedbackData);
     } catch (error) {
-        res.status(500).send({ error: "Something went Wrong" })
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 };
 
@@ -18,6 +18,6 @@ exports.getRetrieveAllFeedback = async (req, res, next) => {
         const allFeedbackData = await feedback.retrieveAllFeedback()
         await res.status(200).send(allFeedbackData);
     } catch (error) {
-        res.status(500).send({ error: "Something went Wrong" })
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 };

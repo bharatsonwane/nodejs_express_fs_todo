@@ -20,7 +20,6 @@ module.exports = class Auth {
         this.email = reqObj.email;
         this.dob = reqObj.dob;
         this.gender = null;
-        this.employeeRole = null;
         this.programmingLanguageKnown = [];
         this.address = null;
         this.password = reqObj.password;
@@ -66,6 +65,9 @@ module.exports = class Auth {
         let data = fsHelper.extractFileData(filePath);
         let user = data.find(user => user.email === email)
         if (user) {
+            if (user.userRole === "manager" && user.userActivationStatus !== "activate") {
+                throw { statusCode: 501, message: "User status pending or deactivated" }
+            }
             let isPasswordValid = await authHelper.validatePassword(password, user.password);
             if (isPasswordValid === true) {
                 let jwtToken = await authHelper.createToken(user.email, user.userId, user.userRole,)

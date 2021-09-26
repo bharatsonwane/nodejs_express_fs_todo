@@ -5,7 +5,9 @@ const employeeController = require('../controllers/employee.controller');
 const router = express.Router();
 
 
-router.get('/retrieve', auth, employeeController.getRetrieveAllEmployee);
+router.get('/retrieveList', auth, employeeController.getRetrieveEmployeeList);
+
+router.get('/retrieve/:id', auth, employeeController.getRetrieveEmployeeById);
 
 router.put('/update/userActivationStatus', auth, employeeController.putUpdateUserActivationStatus)
 

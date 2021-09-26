@@ -7,7 +7,7 @@ exports.postOwnerLogin = async (req, res, next) => {
         let user = await authUser.ownerLogin(email, password)
         await res.status(200).send({ token: user, role: "owner" });
     } catch (error) {
-        res.status(500).send({ error: "Something went Wrong" })
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 }
 
@@ -23,7 +23,7 @@ exports.postManagerRegister = async (req, res, next) => {
         }
         await res.status(200).send(response);
     } catch (error) {
-        res.status(500).send({ error: "Something went Wrong" })
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 };
 
@@ -33,7 +33,7 @@ exports.postUserLogin = async (req, res, next) => {
         let user = await authUser.userLogin(email, password)
         await res.status(200).send({ token: user });
     } catch (error) {
-        res.status(500).send({ error: "Something went Wrong" })
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 }
 
@@ -44,7 +44,7 @@ exports.postUserLogin = async (req, res, next) => {
 //         const updatedTaskData = await authObject.resetPassword()
 //         await res.status(200).send(updatedTaskData);
 //     } catch (error) {
-//         res.status(500).send({ error: "Something went Wrong" })
+//         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
 //     }
 // };
 

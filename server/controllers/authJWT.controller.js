@@ -5,15 +5,15 @@ exports.postOwnerLogin = async (req, res, next) => {
     const { email, password } = req.body
     try {
         let user = await authUser.ownerLogin(email, password)
-        await res.status(200).send({ token: user, role: "owner" });
+        await res.status(200).send({ token: user, userRole: "owner" });
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
 }
 
 exports.postManagerRegister = async (req, res, next) => {
-    const { email, forename, dob, password } = req.body
-    let reqObj = { email, forename, dob, password }
+    const { divisionName, email, forename, dob, password } = req.body
+    let reqObj = { divisionName, email, forename, dob, password }
     try {
         const authUserObject = new authUser(reqObj)
         const registeredUser = await authUserObject.managerRegister()
@@ -30,8 +30,8 @@ exports.postManagerRegister = async (req, res, next) => {
 exports.postUserLogin = async (req, res, next) => {
     const { email, password } = req.body
     try {
-        let user = await authUser.userLogin(email, password)
-        await res.status(200).send({ token: user });
+        let resObj = await authUser.userLogin(email, password)
+        await res.status(200).send(resObj);
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }

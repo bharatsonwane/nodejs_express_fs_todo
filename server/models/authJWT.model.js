@@ -10,6 +10,7 @@ module.exports = class Auth {
         this.createdOn = null;
         this.modifiedBy = null;
         this.modifiedOn = null;
+        this.divisionName = reqObj.divisionName;
         this.userId = reqObj.userId;
         this.userRole = null
         this.userActivationStatus = null;
@@ -33,7 +34,6 @@ module.exports = class Auth {
         // store that in a database or in a file
         let filePath = fsHelper.authEmployeeDataFilePath();
         let data = fsHelper.extractFileData(filePath);
-        console.log("this", this)
         let user = data.find(user => user.email === this.email)
         if (user) {
             // through error user is allready exists
@@ -69,14 +69,17 @@ module.exports = class Auth {
                 throw { statusCode: 501, message: "User status pending or deactivated" }
             }
             let isPasswordValid = await authHelper.validatePassword(password, user.password);
+
+
             if (isPasswordValid === true) {
-                let jwtToken = await authHelper.createToken(user.email, user.userId, user.userRole,)
-                return jwtToken
+                let jwtToken = await authHelper.createToken(user.divisionName, user.userRole, user.userId, user.email,)
+                let resObj = { token: jwtToken, divisionName: user.divisionName, userRole: user.userRole }
+                return resObj
             } else {
-                // through error email & password does not match
+                throw { statusCode: 501, message: "email & password does not match" }
             }
         } else {
-            // through error user does not exists
+            throw { statusCode: 501, message: "user does not exists" }
         }
     }
 
@@ -88,13 +91,13 @@ module.exports = class Auth {
         if (user) {
             let isPasswordValid = await authHelper.validatePassword(password, user.password);
             if (isPasswordValid === true) {
-                let jwtToken = await authHelper.createToken(user.email, user.userId, "owner")
+                let jwtToken = await authHelper.createToken("all", "owner", user.userId, user.email,)
                 return jwtToken
             } else {
-                // through error email & password does not match
+                throw { statusCode: 400, message: "email & password does not match" }
             }
         } else {
-            // through error user does not exists
+            throw { statusCode: 400, message: "user does not exists" }
         }
     }
 };

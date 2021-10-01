@@ -12,8 +12,8 @@ const validatePassword = async (password, hashedPassword) => {
     return isPasswordValid;
 }
 
-const createToken = async (email, userId, role) => {
-    let jwtToken = jwt.sign({ data: { user: email, userId: userId, userRole: role, } }, "secretKey", { expiresIn: 24 * 60 * 60 })
+const createToken = async (divisionName, userRole, userId, email,) => {
+    let jwtToken = jwt.sign({ data: { divisionName: divisionName, userRole: userRole, userId: userId, user: email, } }, "secretKey", { expiresIn: 24 * 60 * 60 })
     return jwtToken
 }
 

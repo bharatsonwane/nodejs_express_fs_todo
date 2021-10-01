@@ -6,9 +6,10 @@ const auth = async (req, res, next) => {
         const decoded = jwt.verify(token, 'secretKey')
         try {
             let userInfo = {
-                user: decoded.data.user,
+                divisionName: decoded.data.divisionName,
                 userId: decoded.data.userId,
                 userRole: decoded.data.userRole,
+                user: decoded.data.user,
             }
             req.userInfo = userInfo
         } catch (error) {

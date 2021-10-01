@@ -17,6 +17,9 @@ router.put('/update', auth, taskController.putUpdateTask);
 
 router.delete('/:id', auth, taskController.deleteDeleteTask);
 
+router.put('/updateCompleteStatus', auth, taskController.putUpdateTaskCompleteStatus);
+
+router.put('/updateTestingReport', auth, taskController.putUpdateTaskTestingReport);
 
 
 module.exports = router;

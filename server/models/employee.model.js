@@ -2,13 +2,17 @@ const fs = require('fs');
 
 const fsHelper = require('../helper/functions/fsHelper');
 const uniqueId = require('../helper/functions/uniqueIdHelper')
+const authHelper = require("../helper/functions/authHelper")
 
 module.exports = class Task {
     constructor(userInfo, reqObj) {
         this.createdBy = userInfo.userId;
         this.createdOn = reqObj && reqObj.createdOn ? reqObj.createdOn : new Date().toISOString();
         this.modifiedOn = "";
+        this.divisionName = userInfo.divisionName;
         this.userId = reqObj.userId
+        this.userRole = reqObj.userRole;
+        this.userActivationStatus = null;
         this.forename = reqObj.forename;
         this.surname = reqObj.surname;
         this.marriedStatus = reqObj.marriedStatus;
@@ -16,7 +20,6 @@ module.exports = class Task {
         this.email = reqObj.email;
         this.dob = reqObj.dob;
         this.gender = reqObj.gender;
-        this.userRole = reqObj.userRole;
         this.programmingLanguageKnown = reqObj.programmingLanguageKnown;
         this.address = reqObj.address;
         this.password = reqObj.password;
@@ -24,25 +27,28 @@ module.exports = class Task {
 
 
 
-    createEmployee() {
+    async createEmployee() {
         this.userId = uniqueId.getuserId();
+        this.userActivationStatus = "activate";
         // // store that in a database or in a file
         const filePath = fsHelper.authEmployeeDataFilePath();
         const data = fsHelper.extractFileData(filePath);
+        let hashedPassword = await authHelper.hashPassword(this.password);
+        this.password = hashedPassword
         data.push(this);
         fs.writeFileSync(filePath, JSON.stringify(data));
         return this // return created Object
     }
 
     static retrieveEmployeeList(userInfo) {
-        const { userId, userRole } = userInfo
+        const { divisionName, userRole, userId } = userInfo
         const filePath = fsHelper.authEmployeeDataFilePath();
         const data = fsHelper.extractFileData(filePath);
         let filteredEmployeeList = data.filter(employee => {
             if (userRole === "owner") {
                 return true;
             } else if (userRole === "manager") {
-                if (employee.createdBy === userId && employee.userRole === "developer" || employee.userRole === "tester") {
+                if (employee.divisionName === divisionName && employee.userRole === "developer" || employee.userRole === "tester") {
                     return true;
                 }
             }
@@ -56,10 +62,8 @@ module.exports = class Task {
         const filePath = fsHelper.authEmployeeDataFilePath();
         const data = fsHelper.extractFileData(filePath);
         const employee = data.find(employee => {
-            console.log("emp", employee)
             return employee.userId === reqId
         });
-        console.log("employee", employee, reqId)
         return employee
     }
 
@@ -87,6 +91,7 @@ module.exports = class Task {
             throw { message: "User Role Should be manager." }
         }
     }
+
     // updateTask() {
     //     const filePath = fsHelper.todoTaskDataFilePath();
     //     const data = fsHelper.extractFileData(filePath);

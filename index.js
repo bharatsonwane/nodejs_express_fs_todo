@@ -6,9 +6,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // import from other files----------------------------------------------
+const baseUrl = require('./server/helper/config/baseURLconfig');
 const swagger = require('./server/utils/swagger/swagger.routes');
+const userRoutes = require('./server/routes/user.routes');
 const taskRoutes = require('./server/routes/task.routes');
-const authRoutes = require('./server/routes/authJWT.routes');
 const employeeRoutes = require("./server/routes/employee.routes")
 const feedbackRoutes = require('./server/routes/feedback.routes');
 
@@ -34,8 +35,8 @@ app.use(express.static(path.join(__dirname, 'server', 'public')));
 
 
 // Route-----------------------------------------------------------------------
+app.use('/user', userRoutes);
 app.use('/todo', taskRoutes);
-app.use('/authJWT', authRoutes);
 app.use("/employee", employeeRoutes)
 app.use('/feedback', feedbackRoutes);
 
@@ -59,4 +60,6 @@ app.use((err, req, res, next) => {
 
 
 // API URL -------------------------------------------------------------------
-app.listen(8080);
+app.listen(baseUrl.handleGetApiBaseURL(), () => {
+    console.log(`Server is listening on port '${baseUrl.handleGetApiBaseURL()}'`);
+});

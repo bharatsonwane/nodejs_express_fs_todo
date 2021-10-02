@@ -99,8 +99,9 @@ module.exports = class Auth {
 
 
 
-    static async userProfile(userInfo) {
+    static async retrieveUserProfie(userInfo) {
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
         let user = data.find(user => user.email === email)
+        return "sd"
     }
 };

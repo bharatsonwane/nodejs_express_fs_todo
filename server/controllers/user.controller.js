@@ -4,8 +4,8 @@ const user = require('../models/user.model');
 exports.postOwnerLogin = async (req, res, next) => {
     const { email, password } = req.body
     try {
-        let user = await user.ownerLogin(email, password)
-        await res.status(200).send({ token: user, userRole: "owner" });
+        let userObj = await user.ownerLogin(email, password)
+        await res.status(200).send({ token: userObj, userRole: "owner" });
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
@@ -38,7 +38,6 @@ exports.postUserLogin = async (req, res, next) => {
 }
 
 exports.getUserProfile = async (req, res, next) => {
-    console.log("userProfile")
     let userInfo = req.userInfo
     try {
         let resObj = await user.retrieveUserProfie(userInfo)

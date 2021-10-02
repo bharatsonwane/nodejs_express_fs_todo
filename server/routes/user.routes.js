@@ -12,7 +12,7 @@ router.post('/authJWT/employee/login', userController.postUserLogin);
 
 router.post('/manager/register', userController.postManagerRegister);
 
-router.post('/retrieveProfile', auth, userController.getUserProfile);
+router.get('/retrieveProfile', auth, userController.getUserProfile);
 
 
 

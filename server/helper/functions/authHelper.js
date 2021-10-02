@@ -13,7 +13,7 @@ const validatePassword = async (password, hashedPassword) => {
 }
 
 const createToken = async (divisionName, userRole, userId, email,) => {
-    let jwtToken = jwt.sign({ data: { divisionName: divisionName, userRole: userRole, userId: userId, user: email, } }, "secretKey", { expiresIn: 24 * 60 * 60 })
+    let jwtToken = jwt.sign({ data: { divisionName: divisionName, userRole: userRole, userId: userId, userEmail: email, } }, "secretKey", { expiresIn: 24 * 60 * 60 })
     return jwtToken
 }
 

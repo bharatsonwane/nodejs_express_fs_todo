@@ -82,7 +82,6 @@ module.exports = class Auth {
 
     static async ownerLogin(email, password) {
         const data = fsHelper.authOwnerExtractFileData(); // read file data
-
         let user = data.find(user => user.email === email)
         if (user) {
             let isPasswordValid = await authHelper.validatePassword(password, user.password);
@@ -100,8 +99,26 @@ module.exports = class Auth {
 
 
     static async retrieveUserProfie(userInfo) {
-        const data = fsHelper.authEmployeeExtractFileData(); // read file data
-        let user = data.find(user => user.email === email)
-        return "sd"
+        let user
+        if (userInfo.userRole === "owner") {
+            const data = fsHelper.authOwnerExtractFileData(); // read file data
+            user = data.find(user => user.email === userInfo.userEmail)
+
+        } else {
+            const data = fsHelper.authEmployeeExtractFileData(); // read file data
+            user = data.find(user => user.email === userInfo.userEmail)
+        }
+
+        if (user) {
+            let newUserObj = {}
+            Object.entries(user).map(([objectKey, objectValue]) => {
+                if (objectKey !== "password") {
+                    newUserObj[objectKey] = objectValue
+                }
+            })
+            return newUserObj
+        } else {
+            throw { statusCode: 400, message: "user does not exists" }
+        }
     }
 };

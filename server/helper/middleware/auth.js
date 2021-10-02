@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
                 divisionName: decoded.data.divisionName,
                 userId: decoded.data.userId,
                 userRole: decoded.data.userRole,
-                user: decoded.data.user,
+                userEmail: decoded.data.userEmail,
             }
             req.userInfo = userInfo
         } catch (error) {

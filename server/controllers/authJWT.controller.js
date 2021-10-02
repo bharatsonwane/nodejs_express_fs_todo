@@ -37,6 +37,16 @@ exports.postUserLogin = async (req, res, next) => {
     }
 }
 
+exports.getUserProfile = async (req, res, next) => {
+    let userInfo = req.userInfo
+    try {
+        let resObj = await authUser.userLogin(userInfo)
+        await res.status(200).send(resObj);
+    } catch (error) {
+        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
+    }
+}
+
 // exports.putResetPassword = async (req, res, next) => {
 //     const { userId, email, forename, dob, password } = req.body
 //     try {

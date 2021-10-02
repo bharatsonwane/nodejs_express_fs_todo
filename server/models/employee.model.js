@@ -31,19 +31,19 @@ module.exports = class Task {
         this.userId = uniqueId.getuserId();
         this.userActivationStatus = "activate";
         // // store that in a database or in a file
-        const filePath = fsHelper.authEmployeeDataFilePath();
-        const data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         let hashedPassword = await authHelper.hashPassword(this.password);
         this.password = hashedPassword
         data.push(this);
-        fs.writeFileSync(filePath, JSON.stringify(data));
+        fsHelper.authEmployeeWriteFileData(data); // write file data
         return this // return created Object
     }
 
     static retrieveEmployeeList(userInfo) {
         const { divisionName, userRole, userId } = userInfo
-        const filePath = fsHelper.authEmployeeDataFilePath();
-        const data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         let filteredEmployeeList = data.filter(employee => {
             if (userRole === "owner") {
                 return true;
@@ -59,8 +59,8 @@ module.exports = class Task {
     }
 
     static retrieveEmployeebyId(reqId) {
-        const filePath = fsHelper.authEmployeeDataFilePath();
-        const data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         const employee = data.find(employee => {
             return employee.userId === reqId
         });
@@ -68,8 +68,8 @@ module.exports = class Task {
     }
 
     static updateUserActivationStatus(reqObj) {
-        const filePath = fsHelper.authEmployeeDataFilePath();
-        const data = fsHelper.extractFileData(filePath)
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         if (reqObj.userId && reqObj.userActivationStatus) {
             let isUserAvalable = false
             let newDataList = data.map((item) => {
@@ -84,7 +84,7 @@ module.exports = class Task {
             if (isUserAvalable === false) {
                 throw { message: "User is not available" }
             }
-            fs.writeFileSync(filePath, JSON.stringify(newDataList));
+            fsHelper.authEmployeeWriteFileData(newDataList); // write file data
             return reqObj // return created Object
         }
         else {
@@ -92,28 +92,15 @@ module.exports = class Task {
         }
     }
 
-    // updateTask() {
-    //     const filePath = fsHelper.todoTaskDataFilePath();
-    //     const data = fsHelper.extractFileData(filePath);
-    //     if (this.id) {
-    //         const existingTaskIndex = data.findIndex(prod => prod.id === this.id);
-    //         const newTaskList = [...data];// data ==> task list
-    //         newTaskList[existingTaskIndex] = this;
-    //         fs.writeFileSync(filePath, JSON.stringify(newTaskList));
-    //         return this // return created Object
-    //     }
-    // }
-
     static deleteEmployee(reqId) {
-        const filePath = fsHelper.authEmployeeDataFilePath();
-        const data = fsHelper.extractFileData(filePath)
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         let filteredEmployee = data.filter(employee => employee.userId !== reqId)
         fs.writeFileSync(filePath, JSON.stringify(filteredEmployee));
     }
 
     // static retrieveTaskbyId(reqId) {
-    //     const filePath = fsHelper.todoTaskDataFilePath();
-    //     const data = fsHelper.extractFileData(filePath);
+    //     const data = fsHelper.authEmployeeExtractFileData(); // read file data
     //     const task = data.find(task => task.id === reqId);
     //     return task
     // }

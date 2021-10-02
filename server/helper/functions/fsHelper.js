@@ -1,34 +1,70 @@
 const fs = require('fs');
 const path = require('path');
 
-const extractFileData = (filePath) => {
-    const fileData = fs.readFileSync(filePath);
-    const data = JSON.parse(fileData);
-    return data;
+
+// // Owener File -----------------------------------------------------
+let authOwnerDataFilePath = path.join(process.cwd(), "server/utils/data", "authOwnerData.json")
+
+const authOwnerExtractFileData = () => {
+    let fileData = JSON.parse(fs.readFileSync(authOwnerDataFilePath));
+    return fileData;
 }
 
-const authOwnerDataFilePath = () => {
-    return path.join(process.cwd(), "server/utils/data", "authOwnerData.json")
-}
-
-const authEmployeeDataFilePath = () => {
-    return path.join(process.cwd(), 'server/utils/data', 'authUserData.json');  // cwd ==> current working directory
-}
-
-const todoTaskDataFilePath = () => {
-    return path.join(process.cwd(), 'server/utils/data', 'todoTaskData.json');  // cwd ==> current working directory
+const authOwnerWriteFileData = (data) => {
+    fs.writeFileSync(authOwnerDataFilePath, JSON.stringify(data));
 }
 
 
-const feedbackDataFilePath = () => {
-    return path.join(process.cwd(), 'server/utils/data', 'feedbackData.json');   // cwd ==> current working directory
+
+// // Employee File ----------------------------------------------------
+let authEmployeeDataFilePath = path.join(process.cwd(), 'server/utils/data', 'authUserData.json');  // cwd ==> current working directory
+
+const authEmployeeExtractFileData = () => {
+    let fileData = JSON.parse(fs.readFileSync(authEmployeeDataFilePath));
+    return fileData;
+}
+
+const authEmployeeWriteFileData = (data) => {
+    fs.writeFileSync(authEmployeeDataFilePath, JSON.stringify(data));
 }
 
 
+// // To do Task File --------------------------------------------------
+const todoTaskDataFilePath = path.join(process.cwd(), 'server/utils/data', 'todoTaskData.json');  // cwd ==> current working directory
+
+const todoTaskExtractFileData = () => {
+    let fileData = JSON.parse(fs.readFileSync(todoTaskDataFilePath));
+    return fileData;
+}
+
+const todoTaskWriteFileData = (data) => {
+    fs.writeFileSync(todoTaskDataFilePath, JSON.stringify(data));
+}
+
+
+// // Feedback File -----------------------------------------------------
+const feedbackDataFilePath = path.join(process.cwd(), 'server/utils/data', 'feedbackData.json');   // cwd ==> current working directory
+
+const feedbackExtractFileData = () => {
+    let fileData = JSON.parse(fs.readFileSync(feedbackDataFilePath));
+    return fileData;
+}
+
+const feedbackWriteFileData = (data) => {
+    fs.writeFileSync(feedbackDataFilePath, JSON.stringify(data));
+}
+
+// // module exports ===============================================================
 module.exports = {
-    extractFileData,
-    authOwnerDataFilePath,
-    todoTaskDataFilePath,
-    authEmployeeDataFilePath,
-    feedbackDataFilePath,
+    authOwnerExtractFileData,
+    authOwnerWriteFileData,
+
+    authEmployeeExtractFileData,
+    authEmployeeWriteFileData,
+
+    todoTaskExtractFileData,
+    todoTaskWriteFileData,
+
+    feedbackExtractFileData,
+    feedbackWriteFileData
 }

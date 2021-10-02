@@ -21,41 +21,37 @@ module.exports = class Feedback {
     createFeedback() {
         this.id = uniqueId.getTaskUniqueId(4);
         // store that in a database or in a file
-        const filePath = fsHelper.feedbackDataFilePath();
-        const data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.feedbackExtractFileData(); // read file data
         data.push(this);
-        fs.writeFileSync(filePath, JSON.stringify(data));
+        fsHelper.feedbackWriteFileData(data); // write file data
         return this // return created Object
     }
 
     static retrieveAllFeedback() {
-        const filePath = fsHelper.feedbackDataFilePath();
-        const data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.feedbackExtractFileData(); // read file data
+
         return data
     }
 
     updateFeedback() {
-        // const filePath = fsHelper.feedbackDataFilePath();
-        // const data = fsHelper.extractFileData(filePath);
+        // const data = fsHelper.feedbackExtractFileData(); // read file data
         // if (this.id) {
         //     const existingFeedbackIndex = data.findIndex(prod => prod.id === this.id);
         //     const newFeedbackList = [...data];// data ==> feedback list
         //     newFeedbackList[existingFeedbackIndex] = this;
-        //     fs.writeFileSync(filePath, JSON.stringify(newFeedbackList));
+        //     fsHelper.feedbackWriteFileData(newFeedbackList); // write file data
         //     return this // return created Object
         // }
     }
 
     static deleteFeedback(reqId) {
-        // const filePath = fsHelper.feedbackDataFilePath();
-        // const data = fsHelper.extractFileData(filePath);
+        // const data = fsHelper.feedbackExtractFileData(); // read file data
         // let filteredFeedback = data.filter(feedback => feedback.id !== reqId)
-        // fs.writeFileSync(filePath, JSON.stringify(filteredFeedback));
+        // fsHelper.feedbackWriteFileData(filteredFeedback); // write file data
     }
 
     static retrieveFeedbackbyId(reqId) {
-        // const filePath = fsHelper.feedbackDataFilePath();
-        // const data = fsHelper.extractFileData(filePath);
+        // const data = fsHelper.feedbackExtractFileData(); // read file data
         // const Feedback = data.find(feedback => feedback.id === reqId);
         // return Feedback
     }

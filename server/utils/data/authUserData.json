@@ -1,1 +1,106 @@
-[{"createdBy":null,"createdOn":null,"modifiedBy":null,"modifiedOn":null,"divisionName":"test1","userId":"17pRjb4Xce_user_cBAm1","userRole":"manager","userActivationStatus":"activate","forename":"Bharat Sonwane","surname":null,"marriedStatus":null,"phoneNumber":null,"email":"bharat@gmail.com","dob":"2021-09-09","gender":null,"programmingLanguageKnown":[],"address":null,"password":"$2a$12$PPLV4gLiuXZaSt4QAWVqc.BCgDaMkpBtB0tcop20qtuhqUlRy3SuC"},{"createdBy":"17pRjb4Xce_user_cBAm1","createdOn":"2021-09-28T08:51:57.602Z","modifiedOn":"","divisionName":"test1","userId":"17pRjb6CRW_user_9eSp0","userRole":"developer","userActivationStatus":"activate","forename":"sujit","surname":"pavankar","marriedStatus":"","phoneNumber":"787878787878","email":"sujit@gmail.com","dob":"2021-09-09","gender":"male","programmingLanguageKnown":["python"],"address":"Hudco","password":"$2a$12$cK7f/x4zaHY9oFQzyZfVVefv89D8jmNMUcIRSv6ejfa7dt70QRWfm"},{"createdBy":null,"createdOn":null,"modifiedBy":null,"modifiedOn":null,"divisionName":"test2","userId":"17pRjb6uwG_user_Vxs5O","userRole":"manager","userActivationStatus":"activate","forename":"Sanket Tijare","surname":null,"marriedStatus":null,"phoneNumber":null,"email":"sanket@gmail.com","dob":"2021-09-09","gender":null,"programmingLanguageKnown":[],"address":null,"password":"$2a$12$XjnRzk6hzlfJ3ppa9QfqEuiKTw7ygR8pDLGhpUCiWhrvDNzBNth0a"},{"createdBy":"17pRjb4Xce_user_cBAm1","createdOn":"2021-09-30T05:49:58.918Z","modifiedOn":"","divisionName":"test1","userId":"17pRlQWOz8_user_mYOtS","userRole":"tester","userActivationStatus":"activate","forename":"Shantanu","surname":"Badmore","marriedStatus":"","phoneNumber":"23456789777","email":"shantanu@gmail.com","dob":"2021-09-16","gender":"male","programmingLanguageKnown":["javascript"],"address":"Cidco, Aurangabad","password":"$2a$12$jaaYOp7fR2sPcO6mNkHpaOnSIF4PEjLu68TrgjusgA2hJfoGvh.2G"}]
+[
+    {
+        "createdBy": null,
+        "createdOn": null,
+        "modifiedBy": null,
+        "modifiedOn": null,
+        "divisionName": "test1",
+        "userId": "17pRjb4Xce_user_cBAm1",
+        "userRole": "manager",
+        "userActivationStatus": "activate",
+        "forename": "Bharat Sonwane",
+        "surname": null,
+        "marriedStatus": null,
+        "phoneNumber": null,
+        "email": "bharat@gmail.com",
+        "dob": "2021-09-09",
+        "gender": null,
+        "programmingLanguageKnown": [],
+        "address": null,
+        "password": "$2a$12$PPLV4gLiuXZaSt4QAWVqc.BCgDaMkpBtB0tcop20qtuhqUlRy3SuC"
+    },
+    {
+        "createdBy": "17pRjb4Xce_user_cBAm1",
+        "createdOn": "2021-09-30T05:49:58.918Z",
+        "modifiedOn": "",
+        "divisionName": "test1",
+        "userId": "17pRlQWOz8_user_mYOtS",
+        "userRole": "developer",
+        "userActivationStatus": "activate",
+        "forename": "Shantanu",
+        "surname": "Badmore",
+        "marriedStatus": "",
+        "phoneNumber": "23456789777",
+        "email": "shantanu@gmail.com",
+        "dob": "2021-09-16",
+        "gender": "male",
+        "programmingLanguageKnown": [
+            "javascript"
+        ],
+        "address": "Cidco, Aurangabad",
+        "password": "$2a$12$jaaYOp7fR2sPcO6mNkHpaOnSIF4PEjLu68TrgjusgA2hJfoGvh.2G"
+    },
+    {
+        "createdBy": "17pRjb4Xce_user_cBAm1",
+        "createdOn": "2021-09-28T08:51:57.602Z",
+        "modifiedOn": "",
+        "divisionName": "test1",
+        "userId": "17pRjb6CRW_user_9eSp0",
+        "userRole": "tester",
+        "userActivationStatus": "activate",
+        "forename": "sujit",
+        "surname": "pavankar",
+        "marriedStatus": "",
+        "phoneNumber": "787878787878",
+        "email": "sujit@gmail.com",
+        "dob": "2021-09-09",
+        "gender": "male",
+        "programmingLanguageKnown": [
+            "python"
+        ],
+        "address": "Hudco",
+        "password": "$2a$12$cK7f/x4zaHY9oFQzyZfVVefv89D8jmNMUcIRSv6ejfa7dt70QRWfm"
+    },
+    {
+        "createdBy": null,
+        "createdOn": null,
+        "modifiedBy": null,
+        "modifiedOn": null,
+        "divisionName": "test2",
+        "userId": "17pRjb6uwG_user_Vxs5O",
+        "userRole": "manager",
+        "userActivationStatus": "activate",
+        "forename": "Sanket Tijare",
+        "surname": null,
+        "marriedStatus": null,
+        "phoneNumber": null,
+        "email": "sanket@gmail.com",
+        "dob": "2021-09-09",
+        "gender": null,
+        "programmingLanguageKnown": [],
+        "address": null,
+        "password": "$2a$12$XjnRzk6hzlfJ3ppa9QfqEuiKTw7ygR8pDLGhpUCiWhrvDNzBNth0a"
+    },
+    {
+        "createdBy": "17pRjb4Xce_user_cBAm1",
+        "createdOn": "2021-10-01T18:59:49.551Z",
+        "modifiedOn": "",
+        "divisionName": "test1",
+        "userId": "17pSngFbTm_user_XvDcy",
+        "userRole": "developer",
+        "userActivationStatus": "activate",
+        "forename": "Kavita",
+        "surname": "Savant",
+        "marriedStatus": "",
+        "phoneNumber": "1289048489",
+        "email": "kavita@gmail.com",
+        "dob": "2021-10-28",
+        "gender": "female",
+        "programmingLanguageKnown": [
+            "javascript",
+            "java"
+        ],
+        "address": "Pune",
+        "password": "$2a$12$NbRzTE3AjKHmO.dk4Of8juNyGJHd/M80rCAa2OcYYD9EwCOsf2CR."
+    }
+]

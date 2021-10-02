@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const fsHelper = require('../helper/functions/fsHelper');
 const uniqueId = require('../helper/functions/uniqueIdHelper')
 const authHelper = require("../helper/functions/authHelper")
@@ -32,8 +30,7 @@ module.exports = class Auth {
         this.userActivationStatus = "pending";
         this.userRole = "manager";
         // store that in a database or in a file
-        let filePath = fsHelper.authEmployeeDataFilePath();
-        let data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
         let user = data.find(user => user.email === this.email)
         if (user) {
             // through error user is allready exists
@@ -42,27 +39,26 @@ module.exports = class Auth {
             let hashedPassword = await authHelper.hashPassword(this.password);
             this.password = hashedPassword
             data.push(this);
-            fs.writeFileSync(filePath, JSON.stringify(data));
+            fsHelper.authEmployeeWriteFileData(data); // write file data
             return this.email // return created Object
         }
     }
 
     async updateUser() {
-        let filePath = fsHelper.authEmployeeDataFilePath();
-        let data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData() // read file data
         if (this.email) {
             let existingUserIndex = data.findIndex(prod => prod.email === this.email);
             this.userId = newUserList[existingUserIndex].userId // get user Unique Id
             let newUserList = [...data];// data ==> users list
             newUserList[existingUserIndex] = this;
-            fs.writeFileSync(filePath, JSON.stringify(newUserList));
+            fsHelper.authEmployeeWriteFileData(newUserList); // write file data
             return this // return created Object
         }
     }
 
     static async userLogin(email, password) {
-        let filePath = fsHelper.authEmployeeDataFilePath();
-        let data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+
         let user = data.find(user => user.email === email)
         if (user) {
             if (user.userRole === "manager" && user.userActivationStatus !== "activate") {
@@ -85,8 +81,8 @@ module.exports = class Auth {
 
 
     static async ownerLogin(email, password) {
-        let filePath = fsHelper.authOwnerDataFilePath();
-        let data = fsHelper.extractFileData(filePath);
+        const data = fsHelper.authOwnerExtractFileData(); // read file data
+
         let user = data.find(user => user.email === email)
         if (user) {
             let isPasswordValid = await authHelper.validatePassword(password, user.password);
@@ -99,5 +95,12 @@ module.exports = class Auth {
         } else {
             throw { statusCode: 400, message: "user does not exists" }
         }
+    }
+
+
+
+    static async userProfile(userInfo) {
+        const data = fsHelper.authEmployeeExtractFileData(); // read file data
+        let user = data.find(user => user.email === email)
     }
 };

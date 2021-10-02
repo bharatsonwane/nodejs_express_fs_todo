@@ -26,6 +26,8 @@ const validateToken = async (token) => {
     }
 }
 
+
+// // module exports ======================================
 module.exports = {
     hashPassword,
     validatePassword,

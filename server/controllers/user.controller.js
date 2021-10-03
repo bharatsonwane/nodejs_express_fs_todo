@@ -1,20 +1,9 @@
 const user = require('../models/user.model');
 
 
-exports.postOwnerLogin = async (req, res, next) => {
-    const { email, password } = req.body
-    try {
-        let userObj = await user.ownerLogin(email, password)
-        await res.status(200).send({ token: userObj, userRole: "owner" });
-    } catch (error) {
-        res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
-    }
-}
-
 exports.postManagerRegister = async (req, res, next) => {
-    const { divisionName, email, forename, dob, password } = req.body
-    let reqObj = { divisionName, email, forename, dob, password }
     try {
+        let reqObj = req.body
         const userObject = new user(reqObj)
         const registeredUser = await userObject.managerRegister()
         let response = {
@@ -28,9 +17,9 @@ exports.postManagerRegister = async (req, res, next) => {
 };
 
 exports.postUserLogin = async (req, res, next) => {
-    const { email, password } = req.body
     try {
-        let resObj = await user.userLogin(email, password)
+        let reqObj = req.body
+        let resObj = await user.userLogin(reqObj)
         await res.status(200).send(resObj);
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
@@ -38,8 +27,8 @@ exports.postUserLogin = async (req, res, next) => {
 }
 
 exports.getUserProfile = async (req, res, next) => {
-    let userInfo = req.userInfo
     try {
+        let userInfo = req.userInfo
         let resObj = await user.retrieveUserProfie(userInfo)
         await res.status(200).send(resObj);
     } catch (error) {

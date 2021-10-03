@@ -5,7 +5,7 @@ const authHelper = require("../helper/functions/authHelper")
 module.exports = class Auth {
     constructor(reqObj) {
         this.createdBy = null;
-        this.createdOn = null;
+        this.createdOn = reqObj && reqObj.createdOn ? reqObj.createdOn : new Date().toISOString();
         this.modifiedBy = null;
         this.modifiedOn = null;
         this.divisionName = reqObj.divisionName;
@@ -13,7 +13,7 @@ module.exports = class Auth {
         this.userRole = null
         this.userActivationStatus = null;
         this.forename = reqObj.forename;
-        this.surname = null;
+        this.surname = reqObj.surname;
         this.marriedStatus = null;
         this.phoneNumber = null;
         this.email = reqObj.email;
@@ -56,46 +56,39 @@ module.exports = class Auth {
         }
     }
 
-    static async userLogin(email, password) {
-        const data = fsHelper.authEmployeeExtractFileData(); // read file data
-
-        let user = data.find(user => user.email === email)
-        if (user) {
-            if (user.userRole === "manager" && user.userActivationStatus !== "activate") {
-                throw { statusCode: 501, message: "User status pending or deactivated" }
-            }
-            let isPasswordValid = await authHelper.validatePassword(password, user.password);
-
-
+    static async userLogin(reqObj) {
+        const ownerData = fsHelper.authOwnerExtractFileData(); // read file data
+        const ownerUser = ownerData.find(user => user.email === reqObj.email)
+        if (ownerUser) {
+            let isPasswordValid = await authHelper.validatePassword(reqObj.password, ownerUser.password);
             if (isPasswordValid === true) {
-                let jwtToken = await authHelper.createToken(user.divisionName, user.userRole, user.userId, user.email,)
-                let resObj = { token: jwtToken, divisionName: user.divisionName, userRole: user.userRole }
-                return resObj
-            } else {
-                throw { statusCode: 501, message: "email & password does not match" }
-            }
-        } else {
-            throw { statusCode: 501, message: "user does not exists" }
-        }
-    }
-
-
-    static async ownerLogin(email, password) {
-        const data = fsHelper.authOwnerExtractFileData(); // read file data
-        let user = data.find(user => user.email === email)
-        if (user) {
-            let isPasswordValid = await authHelper.validatePassword(password, user.password);
-            if (isPasswordValid === true) {
-                let jwtToken = await authHelper.createToken("all", "owner", user.userId, user.email,)
-                return jwtToken
+                let jwtToken = await authHelper.createToken("all", "owner", ownerUser.userId, ownerUser.email,)
+                let resObj = { token: jwtToken, userRole: "owner" }
+                return resObj;
             } else {
                 throw { statusCode: 400, message: "email & password does not match" }
             }
         } else {
-            throw { statusCode: 400, message: "user does not exists" }
+            const data = fsHelper.authEmployeeExtractFileData(); // read file data
+            let user = data.find(user => user.email === reqObj.email)
+            if (user) {
+                if (user.userRole === "manager" && user.userActivationStatus !== "activate") {
+                    throw { statusCode: 501, message: "User status pending or deactivated" }
+                }
+                let isPasswordValid = await authHelper.validatePassword(reqObj.password, user.password);
+
+                if (isPasswordValid === true) {
+                    let jwtToken = await authHelper.createToken(user.divisionName, user.userRole, user.userId, user.email,)
+                    let resObj = { token: jwtToken, divisionName: user.divisionName, userRole: user.userRole }
+                    return resObj
+                } else {
+                    throw { statusCode: 501, message: "email & password does not match" }
+                }
+            } else {
+                throw { statusCode: 501, message: "user does not exists" }
+            }
         }
     }
-
 
 
     static async retrieveUserProfie(userInfo) {

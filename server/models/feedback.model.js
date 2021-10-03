@@ -18,7 +18,7 @@ module.exports = class Feedback {
     }
 
 
-    createFeedback() {
+    async createFeedback() {
         this.id = uniqueId.getTaskUniqueId(4);
         // store that in a database or in a file
         const data = fsHelper.feedbackExtractFileData(); // read file data
@@ -27,13 +27,13 @@ module.exports = class Feedback {
         return this // return created Object
     }
 
-    static retrieveAllFeedback() {
+    static async retrieveAllFeedback() {
         const data = fsHelper.feedbackExtractFileData(); // read file data
 
         return data
     }
 
-    updateFeedback() {
+    async updateFeedback() {
         // const data = fsHelper.feedbackExtractFileData(); // read file data
         // if (this.id) {
         //     const existingFeedbackIndex = data.findIndex(prod => prod.id === this.id);
@@ -44,13 +44,13 @@ module.exports = class Feedback {
         // }
     }
 
-    static deleteFeedback(reqId) {
+    static async deleteFeedback(reqId) {
         // const data = fsHelper.feedbackExtractFileData(); // read file data
         // let filteredFeedback = data.filter(feedback => feedback.id !== reqId)
         // fsHelper.feedbackWriteFileData(filteredFeedback); // write file data
     }
 
-    static retrieveFeedbackbyId(reqId) {
+    static async retrieveFeedbackbyId(reqId) {
         // const data = fsHelper.feedbackExtractFileData(); // read file data
         // const Feedback = data.find(feedback => feedback.id === reqId);
         // return Feedback

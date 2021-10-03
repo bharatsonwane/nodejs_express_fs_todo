@@ -30,7 +30,7 @@ module.exports = class Task {
     }
 
 
-    createTask() {
+    async createTask() {
         this.id = uniqueId.getTaskUniqueId(5);
         this.status.completion.completionStatus = "assigned"
         // store that in a database or in a file
@@ -40,7 +40,7 @@ module.exports = class Task {
         return this // return created Object
     }
 
-    static retrieveTaskList(userInfo) {
+    static async retrieveTaskList(userInfo) {
         const data = fsHelper.todoTaskExtractFileData()
         let newData = data.filter(task => {
             if (userInfo.userRole === "owner") {
@@ -72,7 +72,7 @@ module.exports = class Task {
         return newData
     }
 
-    updateTask() {
+    async updateTask() {
         const data = fsHelper.todoTaskExtractFileData()
         if (this.id) {
             this.modifiedOn = new Date().toISOString()
@@ -91,13 +91,13 @@ module.exports = class Task {
         return reqId
     }
 
-    static retrieveTaskbyId(reqId) {
+    static async retrieveTaskbyId(reqId) {
         const data = fsHelper.todoTaskExtractFileData()
         const task = data.find(task => task.id === reqId);
         return task
     }
 
-    static updateTaskCompleteStatus(userInfo, reqObj) {
+    static async updateTaskCompleteStatus(userInfo, reqObj) {
         if (userInfo.userRole === "developer") {
             const data = fsHelper.todoTaskExtractFileData()
             const newDataArray = data.map((task) => {
@@ -109,8 +109,8 @@ module.exports = class Task {
                     }
 
                     newTask.status.statusLog.push(statusLogObj)
-                    newTask.status.completion.testedBy = userInfo.userId
-                    newTask.status.completion.testedOn = new Date().toISOString()
+                    newTask.status.completion.completedBy = userInfo.userId
+                    newTask.status.completion.completedOn = new Date().toISOString()
                     newTask.status.completion.completionStatus = "completed"
                     return newTask
                 }
@@ -123,7 +123,7 @@ module.exports = class Task {
         }
     }
 
-    static updateTaskTestingReport(userInfo, reqObj) {
+    static async updateTaskTestingReport(userInfo, reqObj) {
         if (userInfo.userRole === "tester") {
             const data = fsHelper.todoTaskExtractFileData()
             const newDataArray = data.map((task) => {

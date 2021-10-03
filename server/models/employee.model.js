@@ -1,4 +1,3 @@
-const fs = require('fs');
 
 const fsHelper = require('../helper/functions/fsHelper');
 const uniqueId = require('../helper/functions/uniqueIdHelper')
@@ -32,15 +31,18 @@ module.exports = class Task {
         this.userActivationStatus = "activate";
         // // store that in a database or in a file
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
-
+        const employee = data.find(employee => employee.email === this.email)
+        if (employee) {
+            throw { message: "User is already available" }
+        }
         let hashedPassword = await authHelper.hashPassword(this.password);
         this.password = hashedPassword
         data.push(this);
         fsHelper.authEmployeeWriteFileData(data); // write file data
-        return this // return created Object
+        return this.email // return created Object
     }
 
-    static retrieveEmployeeList(userInfo) {
+    static async retrieveEmployeeList(userInfo) {
         const { divisionName, userRole, userId } = userInfo
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
 
@@ -58,7 +60,7 @@ module.exports = class Task {
         return filteredEmployeeList
     }
 
-    static retrieveEmployeebyId(reqId) {
+    static async retrieveEmployeebyId(reqId) {
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
 
         const employee = data.find(employee => {
@@ -67,7 +69,7 @@ module.exports = class Task {
         return employee
     }
 
-    static updateUserActivationStatus(reqObj) {
+    static async updateUserActivationStatus(reqObj) {
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
 
         if (reqObj.userId && reqObj.userActivationStatus) {
@@ -92,11 +94,12 @@ module.exports = class Task {
         }
     }
 
-    static deleteEmployee(reqId) {
+    static async deleteEmployee(reqId) {
         const data = fsHelper.authEmployeeExtractFileData(); // read file data
 
         let filteredEmployee = data.filter(employee => employee.userId !== reqId)
-        fs.writeFileSync(filePath, JSON.stringify(filteredEmployee));
+        fsHelper.authEmployeeWriteFileData(filteredEmployee)
+        return reqId
     }
 
     // static retrieveTaskbyId(reqId) {

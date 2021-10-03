@@ -37,8 +37,8 @@ exports.putUpdateUserActivationStatus = async (req, res, next) => {
 exports.deleteDeleteEmployee = async (req, res, next) => {
     let reqId = req.params.id
     try {
-        employeeModel.deleteEmployee(reqId)
-        await res.status(200).send("User deleted succesfully");
+        let resObj = employeeModel.deleteEmployee(reqId)
+        await res.status(200).send({ id: resObj, message: "User deleted succesfully" });
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }
@@ -50,8 +50,8 @@ exports.postCreateEmployee = async (req, res, next) => {
     let reqObj = req.body
     try {
         const employeeObject = new employeeModel(userInfo, reqObj)
-        employeeObject.createEmployee()
-        await res.status(200).send("Employee created succesfully");
+        let resObj = await employeeObject.createEmployee()
+        await res.status(200).send({ email: resObj, message: "Employee created succesfully" });
     } catch (error) {
         res.status(error.statusCode ? error.statusCode : 500).send({ error: error.message })
     }

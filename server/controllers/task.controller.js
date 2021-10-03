@@ -27,9 +27,11 @@ exports.getRetrieveTaskList = async (req, res, next) => {
 
 
 exports.putUpdateTask = async (req, res, next) => {
-    const { id, title, date, description, technology, library } = req.body
     try {
-        const taskObject = new todoTask(id, title, date, description, technology, library)
+        let userInfo = req.userInfo
+        const { id, title, date, description, technology, library } = req.body
+        reqObj = { id, title, date, description, technology, library }
+        const taskObject = new todoTask(userInfo, reqObj)
         const resObj = await taskObject.updateTask()
         await res.status(200).send(resObj);
     } catch (error) {

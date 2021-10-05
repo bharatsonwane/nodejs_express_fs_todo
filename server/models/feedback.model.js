@@ -4,17 +4,17 @@ const fsHelper = require('../helper/functions/fsHelper');
 const uniqueId = require('../helper/functions/uniqueIdHelper')
 
 module.exports = class Feedback {
-    constructor(id, date, fullName, phoneNumber, email, uiTech, backEndTech, library, satisfiedWithService, message) {
-        this.id = id;
-        this.date = date;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.uiTech = uiTech;
-        this.backEndTech = backEndTech;
-        this.library = library;
-        this.satisfiedWithService = satisfiedWithService;
-        this.message = message;
+    constructor(reqObj) {
+        this.id = reqObj.id;
+        this.date = reqObj.date;
+        this.fullName = reqObj.fullName;
+        this.phoneNumber = reqObj.phoneNumber;
+        this.email = reqObj.email;
+        this.uiTech = reqObj.uiTech;
+        this.backEndTech = reqObj.backEndTech;
+        this.library = reqObj.library;
+        this.serviceSatisfaction = reqObj.serviceSatisfaction;
+        this.message = reqObj.message;
     }
 
 

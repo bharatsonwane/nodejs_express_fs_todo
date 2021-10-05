@@ -2,9 +2,9 @@ const feedback = require('../models/feedback.model');
 
 
 exports.postCreateFeedback = async (req, res, next) => {
-    const { date, fullName, phoneNumber, email, uiTech, backEndTech, library, satisfiedWithService, message } = req.body
     try {
-        const feedbackObject = new feedback(null, date, fullName, phoneNumber, email, uiTech, backEndTech, library, satisfiedWithService, message)
+        reqObj = req.body
+        const feedbackObject = new feedback(reqObj)
         const createdFeedbackData = await feedbackObject.createFeedback()
         await res.status(200).send(createdFeedbackData);
     } catch (error) {

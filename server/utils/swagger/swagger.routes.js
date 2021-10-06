@@ -17,4 +17,8 @@ router.use('/api-docs', function (req, res, next) {
   res.send(swaggerDocument);
 });
 
+router.use("/test", function (req, res, next) {
+  res.send(`<html><body><h1>nodejs_express_fs project testing.</h1></body></html>`)
+})
+
 module.exports = router;

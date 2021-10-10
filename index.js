@@ -11,7 +11,7 @@ var cors = require('cors')
 
 // import from other files----------------------------------------------
 const baseUrl = require('./server/helper/config/baseURLconfig');
-const swagger = require('./server/utils/swagger/swagger.routes');
+const swagger = require('./server/utils/documentation/swagger.routes');
 const userRoutes = require('./server/routes/user.routes');
 const taskRoutes = require('./server/routes/task.routes');
 const employeeRoutes = require("./server/routes/employee.routes")

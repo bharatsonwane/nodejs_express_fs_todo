@@ -7,11 +7,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors')
 
-
+// swagger -----------------------------------------------------------
+const swaggerUi = require("swagger-ui-express");
+const swaggerDoc = require("./server/utils/documentation/index");
 
 // import from other files----------------------------------------------
 const baseUrl = require('./server/helper/config/baseURLconfig');
-const swagger = require('./server/utils/documentation/swagger.routes');
 const userRoutes = require('./server/routes/user.routes');
 const taskRoutes = require('./server/routes/task.routes');
 const employeeRoutes = require("./server/routes/employee.routes")
@@ -48,7 +49,12 @@ app.use('/feedback', feedbackRoutes);
 
 
 // Swagger Route--------------------------------------------------------------
-app.use('/', swagger);
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
+// Test Route --------------------------------------------------------------------------
+app.use("/test", function (req, res, next) {
+    res.send(`<html><body><h1><em>nodejs_express_fs project testing.</em></h1></body></html>`)
+})
 
 app.use((req, res, next) => {
     const err = new Error("Url not found");

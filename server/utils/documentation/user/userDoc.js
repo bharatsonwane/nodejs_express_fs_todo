@@ -2,9 +2,14 @@
 // // swagger defination
 exports.userDefination = {
     userLoginObject: {
+        required: [
+            "email",
+            "password"
+        ],
         properties: {
             email: {
                 type: "string",
+                uniqueItems: true,
                 example: "user@gmail.com"
             },
             password: {
@@ -32,18 +37,24 @@ exports.userDefination = {
 
 //  // swagger paths
 exports.userPath = {
-    "/users/login": {
+    "/user/authJWT/login": {
         post: {
-            tags: ["users"],
+            tags: ["User"],
+            description: "Login user having any user role.",
             parameters: [
                 {
-                    in: "body",
+                    name: "user",
                     required: true,
+                    in: "body",
                     type: "object",
+                    description: "User that we want to login.",
                     schema: {
                         "$ref": `#/definitions/userLoginObject`
                     }
                 }
+            ],
+            produces: [
+                "application/json"
             ],
             responses: {
                 200: {
@@ -54,23 +65,5 @@ exports.userPath = {
                 }
             }
         },
-        put: {
-            tags: ["users"],
-            parameters: [
-                {
-                    in: "body",
-                    required: true,
-                    type: "object",
-                    schema: {
-                        "$ref": `#/definitions/userLoginObject`
-                    }
-                }
-            ],
-            responses: {
-                200: {
-                    description: "Success!",
-                }
-            }
-        }
     },
 }

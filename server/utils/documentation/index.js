@@ -1,61 +1,63 @@
-
-const commonDefinitions = require('./commonDefinitions/commonDefinitions')
+const baseUrl = require("../../helper/config/baseURLconfig")
 
 const userDocumetation = require("./user/userDoc")
 
-const employeeDocumetation = require('./employee/employeeDoc');
+// const employeeDocumetation = require('./employee/employeeDoc');
 
 const todoDocumetation = require('./todo/todoDoc');
 
-// const accountsDocumetation = require('./accounts/accountsDoc');
 
-const booksDocumetation = require('./books/booksDoc');
-
-// const carsDocumetation = require('./cars/carsDoc');
-
-
-
-// // swagger
+// // swagger -----------------------------------------------------------------
 module.exports = {
     swagger: "2.0",
     info: {
+        version: "1.0.0",
+        title: "Nodejs Todo App API",
         description: "Sample Node API test",
-        version: "1.0",
-        title: "Sample Node API test"
+        license: {
+            name: "MIT",
+            url: "https://opensource.org/licenses/MIT"
+        }
     },
-    host: "localhost:8080",
+    host: baseUrl.handleGetApiBaseURLSwagger,
     basePath: "/",
-    schemes: ["http"],
-    consumes: ["application/json"],
-    produces: ["application/json"],
-    // tags
-    tags: [
-        {
-            name: "users",
-            description: "Users API"
-        },
-        {
-            name: "Employee",
-            description: "Employee API"
-        },
-        {
-            name: "Todo",
-            description: "Todo Task API"
-        },
-        {
-            name: "Accounts",
-            description: "Accounts API"
-        },
-        {
-            name: "Books",
-            description: "Books API"
-        },
-        {
-            name: "Cars",
-            description: "Cars API"
-        },
+    schemes: [
+        "http"
     ],
-    // Security Definitions
+    consumes: [
+        "application/json"
+    ],
+    produces: [
+        "application/json"
+    ],
+    // // tags -------------------------------------------------------
+    tags: [ // optional
+        // {
+        //     name: "User",
+        //     description: "users API"
+        // },
+        // {
+        //     name: "Employee",
+        //     description: "Employee API"
+        // },
+        // {
+        //     name: "Todo",
+        //     description: "Todo Task API"
+        // },
+        // {
+        //     name: "Accounts",
+        //     description: "Accounts API"
+        // },
+        // {
+        //     name: "Books",
+        //     description: "Books API"
+        // },
+        // {
+        //     name: "Cars",
+        //     description: "Cars API"
+        // },
+    ],
+    // // Security Definitions ---------------------------------------------------
     securityDefinitions: {
         JWT: {
             type: "apiKey",
@@ -63,24 +65,14 @@ module.exports = {
             in: "header"
         }
     },
-    // Definitions ==> models
+    // // definitions -----------------------------------------------------------------
     definitions: {
-        ...commonDefinitions, // common Definitions
         ...userDocumetation.userDefination,
-        ...employeeDocumetation.employeeDefination,
-        ...todoDocumetation.todoTaskDefination,
-        ...booksDocumetation.bookDefination,
-        // ...carsDocumetation.carDefination,
-        // ...accountsDocumetation.accountsDefination,
+        ...todoDocumetation.todoTaskDefination
     },
-
-    // paths
+    // // paths ---------------------------------------------------------------------
     paths: {
         ...userDocumetation.userPath,
-        ...employeeDocumetation.employeePath,
-        ...todoDocumetation.todoTaskPath,
-        ...booksDocumetation.bookPath,
-        // ...accountsDocumetation.accountsPath,
-        // ...carsDocumetation.carPaths,
+        ...todoDocumetation.todoTaskPath
     },
 };

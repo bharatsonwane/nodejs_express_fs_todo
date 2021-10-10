@@ -4,7 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 
 // const swaggerDocument = require('./docs/test/swagger.json');
 // const swaggerDocument = require('./docs/test/swaggerReferenceDoNotDelete');
-const swaggerDocument = require('./docs/index');
+const swaggerDocument = require('./index');
 
 router.use('/swagger', function (req, res, next) {
   swaggerDocument.host = req.get('host');

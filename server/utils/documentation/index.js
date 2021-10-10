@@ -1,14 +1,21 @@
 
 const commonDefinitions = require('./commonDefinitions/commonDefinitions')
 
-const accountsDoc = require('./accounts/accountsDoc');
-const accountsDefinitions = require('./accounts/accountsDefinitions');
-const booksDoc = require('./books/booksDoc');
-const carsDoc = require('./cars/carsDoc');
-const carsDefinitions = require('./cars/carsDefinitions')
-const todoDoc = require('./todo/todoDoc');
-const todoDefinitions = require('./todo/todoDefinitions');
+const userDocumetation = require("./user/userDoc")
 
+const employeeDocumetation = require('./employee/employeeDoc');
+
+const todoDocumetation = require('./todo/todoDoc');
+
+// const accountsDocumetation = require('./accounts/accountsDoc');
+
+const booksDocumetation = require('./books/booksDoc');
+
+// const carsDocumetation = require('./cars/carsDoc');
+
+
+
+// // swagger
 module.exports = {
     swagger: "2.0",
     info: {
@@ -18,8 +25,23 @@ module.exports = {
     },
     host: "localhost:8080",
     basePath: "/",
+    schemes: ["http"],
+    consumes: ["application/json"],
+    produces: ["application/json"],
     // tags
     tags: [
+        {
+            name: "users",
+            description: "Users API"
+        },
+        {
+            name: "Employee",
+            description: "Employee API"
+        },
+        {
+            name: "Todo",
+            description: "Todo Task API"
+        },
         {
             name: "Accounts",
             description: "Accounts API"
@@ -32,29 +54,33 @@ module.exports = {
             name: "Cars",
             description: "Cars API"
         },
-        {
-            name: "Todo",
-            description: "Todo Task API"
+    ],
+    // Security Definitions
+    securityDefinitions: {
+        JWT: {
+            type: "apiKey",
+            name: "Authorization",
+            in: "header"
         }
-    ],
-    schemes: [
-        "http"
-    ],
-    produces: [
-        "application/json"
-    ],
-    // paths
-    paths: {
-        ...accountsDoc,
-        ...booksDoc,
-        ...carsDoc,
-        ...todoDoc,
     },
     // Definitions ==> models
     definitions: {
         ...commonDefinitions, // common Definitions
-        ...carsDefinitions,
-        ...accountsDefinitions,
-        ...todoDefinitions,
-    }
+        ...userDocumetation.userDefination,
+        ...employeeDocumetation.employeeDefination,
+        ...todoDocumetation.todoTaskDefination,
+        ...booksDocumetation.bookDefination,
+        // ...carsDocumetation.carDefination,
+        // ...accountsDocumetation.accountsDefination,
+    },
+
+    // paths
+    paths: {
+        ...userDocumetation.userPath,
+        ...employeeDocumetation.employeePath,
+        ...todoDocumetation.todoTaskPath,
+        ...booksDocumetation.bookPath,
+        // ...accountsDocumetation.accountsPath,
+        // ...carsDocumetation.carPaths,
+    },
 };

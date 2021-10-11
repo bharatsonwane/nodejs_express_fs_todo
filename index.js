@@ -9,7 +9,7 @@ var cors = require('cors')
 
 // swagger -----------------------------------------------------------
 const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("./server/utils/documentation/index");
+const swaggerDoc = require("./server/utils/documentation/swagger");
 
 // import from other files----------------------------------------------
 const baseUrl = require('./server/helper/config/baseURLconfig');

@@ -1,10 +1,10 @@
 const baseUrl = require("../../helper/config/baseURLconfig")
 
-const userDocumetation = require("./user/userDoc")
+const userDoc = require("./content/userDoc")
 
-// const employeeDocumetation = require('./employee/employeeDoc');
+const employeeDoc = require('./content/employeeDoc');
 
-const todoDocumetation = require('./todo/todoDoc');
+const todoDoc = require('./content/todoDoc');
 
 
 // // swagger -----------------------------------------------------------------
@@ -67,12 +67,14 @@ module.exports = {
     },
     // // definitions -----------------------------------------------------------------
     definitions: {
-        ...userDocumetation.userDefination,
-        ...todoDocumetation.todoTaskDefination
+        ...userDoc.userDefination,
+        ...todoDoc.todoTaskDefination,
+        ...employeeDoc.employeeDefination,
     },
     // // paths ---------------------------------------------------------------------
     paths: {
-        ...userDocumetation.userPath,
-        ...todoDocumetation.todoTaskPath
+        ...userDoc.userPath,
+        ...todoDoc.todoTaskPath,
+        ...employeeDoc.employeePath,
     },
 };

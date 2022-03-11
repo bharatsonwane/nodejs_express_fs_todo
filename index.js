@@ -13,11 +13,7 @@ const swaggerDoc = require("./server/utils/documentation/swagger");
 
 // import from other files----------------------------------------------
 const baseUrl = require('./server/helper/config/baseURLconfig');
-const userRoutes = require('./server/routes/user.routes');
-const taskRoutes = require('./server/routes/task.routes');
-const employeeRoutes = require("./server/routes/employee.routes")
-const feedbackRoutes = require('./server/routes/feedback.routes');
-
+const routes = require('./server/routes/routes')
 // define constants -----------------------------------------------------
 const app = express();
 
@@ -40,21 +36,14 @@ app.use(express.static(path.join(__dirname, 'server', 'public')));
 
 
 
-// Route-----------------------------------------------------------------------
-app.use('/user', userRoutes);
-app.use('/todo', taskRoutes);
-app.use("/employee", employeeRoutes)
-app.use('/feedback', feedbackRoutes);
-
-
-
-// Swagger Route--------------------------------------------------------------
+// Route --------------------------------------------------------------------------
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
-
-// Test Route --------------------------------------------------------------------------
 app.use("/test", function (req, res, next) {
     res.send(`<html><body><h1><em>nodejs_express_fs project testing.</em></h1></body></html>`)
 })
+app.use("/", routes); // App Main Routes
+
+
 
 app.use((req, res, next) => {
     const err = new Error("Url not found");

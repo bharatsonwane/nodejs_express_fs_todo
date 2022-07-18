@@ -23,7 +23,7 @@ module.exports = {
     host: baseUrl.handleGetApiBaseURLSwagger,
     basePath: "/",
     schemes: [
-        "http"
+        "http", "https"
     ],
     consumes: [
         "application/json"

@@ -42,6 +42,19 @@ const todoTaskWriteFileData = (data) => {
 }
 
 
+// // To do Task File --------------------------------------------------
+const projectDataFilePath = path.join(process.cwd(), 'server/utils/data', 'projectData.json');  // cwd ==> current working directory
+
+const projectExtractFileData = () => {
+    let fileData = JSON.parse(fs.readFileSync(projectDataFilePath));
+    return fileData;
+}
+
+const projectWriteFileData = (data) => {
+    fs.writeFileSync(projectDataFilePath, JSON.stringify(data));
+}
+
+
 // // Feedback File -----------------------------------------------------
 const feedbackDataFilePath = path.join(process.cwd(), 'server/utils/data', 'feedbackData.json');   // cwd ==> current working directory
 
@@ -64,6 +77,9 @@ module.exports = {
 
     todoTaskExtractFileData,
     todoTaskWriteFileData,
+
+    projectExtractFileData,
+    projectWriteFileData,
 
     feedbackExtractFileData,
     feedbackWriteFileData

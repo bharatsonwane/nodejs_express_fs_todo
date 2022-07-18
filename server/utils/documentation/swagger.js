@@ -6,6 +6,7 @@ const employeeDoc = require('./content/employeeDoc');
 
 const todoDoc = require('./content/todoDoc');
 
+const projectDoc = require('./content/projectDoc');
 
 // // swagger -----------------------------------------------------------------
 module.exports = {
@@ -70,11 +71,13 @@ module.exports = {
         ...userDoc.userDefination,
         ...todoDoc.todoTaskDefination,
         ...employeeDoc.employeeDefination,
+        ...projectDoc.projectDefination,
     },
     // // paths ---------------------------------------------------------------------
     paths: {
         ...userDoc.userPath,
         ...todoDoc.todoTaskPath,
         ...employeeDoc.employeePath,
+        ...projectDoc.projectPath
     },
 };
